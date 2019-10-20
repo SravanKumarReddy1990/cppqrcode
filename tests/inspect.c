@@ -33,19 +33,50 @@ GtkWidget *label_user;
 GtkWidget *label_pass;
 GtkWidget  *button_container;
 
-void create_window(GtkWidget *button, gpointer window) {
+char compareStrings(char s1[],int slen, char s2[], int len){
+	int i=0;
+
+	for(i=0; i<len; i++){
+		if(s1[i]!=s2[i]){
+			return -1;
+		}
+	}
+	return 0;
+}
+
+void create_window(GtkWidget *button, gpointer data) {
 
 GtkWidget *win, *label;
 
-//Username and Password to validate credentials
-const char* USERNAME = "";
-const char* PASSWORD = "xsd";
+const gchar *PASSWORD;
+PASSWORD=gtk_entry_get_text(GTK_ENTRY(pass));
+//g_print (gtk_entry_get_text(GTK_ENTRY(entry)));
+g_print("clicked %s\n", PASSWORD);
+
+const gchar *USERNAME;
+USERNAME=gtk_entry_get_text(GTK_ENTRY(u_name));
+//g_print (gtk_entry_get_text(GTK_ENTRY(entry)));
+g_print("clicked %s\n", USERNAME);
+
 const char* usernames="";
 const char* passwords="";
 
+int len1=0, len2=0;
+	int i;
+	
+	//calculate lengths
+	i=0;
+	while(USERNAME[i++]!='\0') len1++;
+	i=0;
+	while(PASSWORD[i++]!='\0') len2++;	
+	
+	if(len1!=len2){
+		printf("Strings are not same, lengths are different\n");
+		return -1;
+	}
+	
 
-//Checking if user's entered credentials are equal to actual USERNAME and PASSWORD 
-if (!(usernames==USERNAME) || !(passwords == PASSWORD))
+if (compareStrings(usernames,1,USERNAME,len1)!=0 || compareStrings(passwords,1,PASSWORD,len2)!=0)
 {
 //    std::cout << "inside" << endl;
     label = gtk_label_new("Username and Password is correct.");
@@ -58,16 +89,6 @@ if (!(usernames==USERNAME) || !(passwords == PASSWORD))
 
 
 }
-
-//else if (username != USERNAME || password != PASSWORD)
-
-//{
-//    label = gtk_label_new("Username and Password is incorrect.");
-//    win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-//    gtk_container_add(GTK_CONTAINER(win), label);
-//    gtk_widget_show_all(win);
-
-//}
 
 }
 
@@ -341,6 +362,16 @@ gtk_entry_set_placeholder_text(GTK_ENTRY(pass), "Password");
 gtk_grid_attach(GTK_GRID(grid), label_pass, 0, 2, 1, 1);
 gtk_entry_set_visibility(GTK_ENTRY(pass), 0);
 gtk_grid_attach(GTK_GRID(grid), pass, 1, 2, 1, 1);
+//gtk_widget_destroy(pass);
+
+GtkWidget* windows;
+GtkWidget* image;
+windows = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+  image  = gtk_image_new_from_file("/home/ramu/Downloads/sr.png");
+  //gtk_signal_connect(GTK_OBJECT (window), "destroy",
+    //         GTK_SIGNAL_FUNC (destroy), NULL);
+  gtk_container_add(GTK_CONTAINER (windows), image);
+gtk_widget_show_all(windows);
 
 Login_button = gtk_button_new_with_label("Log in");
 g_signal_connect(Login_button, "clicked", G_CALLBACK(create_window), NULL);
