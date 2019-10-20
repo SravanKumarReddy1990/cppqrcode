@@ -16,12 +16,13 @@
 CC ?= gcc
 PREFIX ?= /usr/local
 SDL_CFLAGS != pkg-config --cflags sdl
+LIBS !=  pkg-config --cflags --libs gtk+-3.0
 SDL_LIBS != pkg-config --libs sdl
 
 LIB_VERSION = 1.0
 
-CFLAGS ?= -O3 -Wall -fPIC
-QUIRC_CFLAGS = -Ilib $(CFLAGS) $(SDL_CFLAGS)
+CFLAGS ?= -O3 -Wall -fPIC -I/usr/include/glib-2.0
+QUIRC_CFLAGS = -Ilib $(CFLAGS) $(SDL_CFLAGS) $(LIBS)
 LIB_OBJ = \
     lib/decode.o \
     lib/identify.o \
@@ -34,13 +35,13 @@ DEMO_OBJ = \
     demo/dthash.o \
     demo/demoutil.o
 
-all: libquirc.so qrtest inspect quirc-demo quirc-scanner
+all:  libquirc.so qrtest inspect quirc-demo quirc-scanner
 
 qrtest: tests/dbgutil.o tests/qrtest.o libquirc.a
 	$(CC) -o $@ tests/dbgutil.o tests/qrtest.o libquirc.a $(LDFLAGS) -lm -ljpeg -lpng
 
 inspect: tests/dbgutil.o tests/inspect.o libquirc.a
-	$(CC) -o $@ tests/dbgutil.o tests/inspect.o libquirc.a $(LDFLAGS) -lm -ljpeg -lpng $(SDL_LIBS) -lSDL_gfx
+	$(CC) -o $@ tests/dbgutil.o tests/inspect.o libquirc.a $(LDFLAGS) -lm -ljpeg -lpng $(LIBS) $(SDL_LIBS) -lSDL_gfx 
 
 quirc-demo: $(DEMO_OBJ) demo/demo.o libquirc.a
 	$(CC) -o $@ $(DEMO_OBJ) demo/demo.o libquirc.a $(LDFLAGS) -lm -ljpeg $(SDL_LIBS) -lSDL_gfx
