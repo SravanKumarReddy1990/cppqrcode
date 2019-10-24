@@ -313,7 +313,7 @@ int main(int argc, char **argv)
 		perror("can't create quirc object");
 		return -1;
 	}
-argv[1]="/home/ramu/Downloads/sr.png";
+argv[1]="/home/ramu/Downloads/sravan.png";
 	int status = -1;
 	if (check_if_png(argv[1])) {
 		status = load_png(q, argv[1]);
@@ -356,22 +356,13 @@ u_name = gtk_entry_new();
 gtk_entry_set_placeholder_text(GTK_ENTRY(u_name), "Username");
 gtk_grid_attach(GTK_GRID(grid), label_user, 0, 1, 1, 1);
 gtk_grid_attach(GTK_GRID(grid), u_name, 1, 1, 2, 1);
+gtk_entry_set_visibility(GTK_ENTRY(u_name), 0);
 
 pass = gtk_entry_new();
 gtk_entry_set_placeholder_text(GTK_ENTRY(pass), "Password");
 gtk_grid_attach(GTK_GRID(grid), label_pass, 0, 2, 1, 1);
-gtk_entry_set_visibility(GTK_ENTRY(pass), 0);
 gtk_grid_attach(GTK_GRID(grid), pass, 1, 2, 1, 1);
 //gtk_widget_destroy(pass);
-
-GtkWidget* windows;
-GtkWidget* image;
-windows = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-  image  = gtk_image_new_from_file("/home/ramu/Downloads/sr.png");
-  //gtk_signal_connect(GTK_OBJECT (window), "destroy",
-    //         GTK_SIGNAL_FUNC (destroy), NULL);
-  gtk_container_add(GTK_CONTAINER (windows), image);
-gtk_widget_show_all(windows);
 
 Login_button = gtk_button_new_with_label("Log in");
 g_signal_connect(Login_button, "clicked", G_CALLBACK(create_window), NULL);
@@ -380,6 +371,16 @@ gtk_grid_attach(GTK_GRID(grid), Login_button, 0, 3, 2, 1);
 Quit_button = gtk_button_new_with_label("Quit");
 g_signal_connect(Quit_button, "clicked", G_CALLBACK(gtk_main_quit), NULL);
 gtk_grid_attach(GTK_GRID(grid), Quit_button, 0, 4, 2, 1);
+
+GtkWidget* windows;
+GtkWidget* image;
+windows = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+  image  = gtk_image_new_from_file("/home/ramu/Downloads/sravan.png");
+  //gtk_signal_connect(GTK_OBJECT (window), "destroy",
+    //         GTK_SIGNAL_FUNC (destroy), NULL);
+  //gtk_container_add(GTK_CONTAINER (windows), image);
+//gtk_widget_show_all(windows);
+gtk_grid_attach(GTK_GRID(grid), image, 0, 5, 2, 1);
 
 
    //g_signal_connect (window, "destroy",
