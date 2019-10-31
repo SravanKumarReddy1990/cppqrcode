@@ -47,6 +47,7 @@ printf(passvalclose);
         
         printf("\n %s %s %s\n", PQgetvalue(res, i, 0), 
             PQgetvalue(res, i, 1), PQgetvalue(res, i, 2));
+return 1;
     }    
 
     PQclear(res);

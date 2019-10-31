@@ -14,7 +14,8 @@ int main(int argc, char const *argv[])
 	int opt = 1; 
 	int addrlen = sizeof(address); 
 	char buffer[1024] = {0}; 
-	char *hello = "Hello from server"; 
+	char *suc = "success";  
+	char *fail = "fail";
 	
 	// Creating socket file descriptor 
 	if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0) 
@@ -67,13 +68,18 @@ while(1){
         p = strtok (NULL, "@@");
     }
 
-mains(array[0],array[1]);
+int j=mains(array[0],array[1]);
     //for (i = 0; i < 2; ++i) 
       //  printf("%s\n", array[i]);
+if(j==0){
 
+	send(new_socket , fail , strlen(fail) , 0 ); 
+	printf("login failure sent\n"); 
+}else if(j==1){
 
-	send(new_socket , hello , strlen(hello) , 0 ); 
-	printf("Hello message sent\n"); 
+	send(new_socket , suc , strlen(suc) , 0 ); 
+	printf("login success sent\n"); 
+}
 }
 	return 0; 
 } 
