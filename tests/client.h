@@ -10,12 +10,25 @@
 char* concat(const char *s1, const char *s2)
 {
 const char *del="@@";
-    char *result = malloc(strlen(s1) +strlen(del) + strlen(s2) + 1); 
+const char *command="one";
+
+    char *result = malloc(strlen(s1) +strlen(del) + strlen(s2)+strlen(del) + strlen(command) + 1); 
     // in real code you would check for errors in malloc here
     strcpy(result, s1);
     strcat(result,del);
     strcat(result, s2);
+    strcat(result,del);
+    strcat(result, command);
     return result;
+}
+int compareStrings(char s1[],int slen, char s2[], int len){
+	int i=0;
+	for(i=0; i<len; i++){
+		if(s1[i]!=s2[i]){
+			return -1;
+		}
+	}
+	return 0;
 }
 int mains(char *id,char *password) 
 { 
@@ -48,6 +61,10 @@ int mains(char *id,char *password)
 	printf("Hello message sent\n"); 
 	valread = read( sock , buffer, 1024); 
 	printf("%s\n",buffer ); 
+int r=compareStrings(buffer,6, "success", 6);
+if(r!=0){
+return 1;
+}
 free(hello);
 	return 0; 
 } 

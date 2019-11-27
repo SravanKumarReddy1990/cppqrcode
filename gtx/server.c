@@ -7,6 +7,19 @@
 #include <string.h> 
 #include "select_rows.h" 
 #define PORT 8080 
+
+char compareStrings(char s1[],int slen, char s2[], int len){
+	int i=0;
+
+	for(i=0; i<len; i++){
+		if(s1[i]!=s2[i]){
+			return -1;
+		}
+	}
+	return 0;
+}
+
+
 int main(int argc, char const *argv[]) 
 { 
 	int server_fd, new_socket, valread; 
@@ -15,7 +28,7 @@ int main(int argc, char const *argv[])
 	int addrlen = sizeof(address); 
 	char buffer[1024] = {0}; 
 	char *suc = "success";  
-	char *fail = "fail";
+	char *fail = "failure";
 	
 	// Creating socket file descriptor 
 	if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0) 
@@ -60,27 +73,25 @@ while(1){
 	printf("%s\n",buffer ); 
  int i = 0;
     char *p = strtok (buffer, "@@");
-    char *array[2];
-
+    char *array[3];
     while (p != NULL)
     {
         array[i++] = p;
         p = strtok (NULL, "@@");
     }
-
+if(compareStrings(array[3],3,"one",3)!=0){
 int j=mains(array[0],array[1]);
-    //for (i = 0; i < 2; ++i) 
-      //  printf("%s\n", array[i]);
 if(j==0){
-
 	send(new_socket , fail , strlen(fail) , 0 ); 
 	printf("login failure sent\n"); 
 }else if(j==1){
-
 	send(new_socket , suc , strlen(suc) , 0 ); 
 	printf("login success sent\n"); 
 }
 }
+
+}
 	return 0; 
 } 
+
 

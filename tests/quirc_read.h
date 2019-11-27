@@ -200,7 +200,7 @@ static int sdl_examine(struct quirc *q)
 	return 0;
 }
 
-int readqr(){
+int readqr(char *argv){
 
 	struct quirc *q;
 
@@ -222,10 +222,10 @@ int readqr(){
 //char **argv;
 //argv[1]="/home/ramu/Downloads/sravan.png";
 	int status = -1;
-	if (check_if_png("/home/ramu/Downloads/sravan.png")) {
-		status = load_png(q, "/home/ramu/Downloads/sravan.png");
+	if (check_if_png(argv)) {
+		status = load_png(q, argv);
 	} else {
-		status = load_jpeg(q, "/home/ramu/Downloads/sravan.png");
+		status = load_jpeg(q, argv);
 	}
 	if (status < 0) {
 		quirc_destroy(q);

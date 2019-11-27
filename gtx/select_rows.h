@@ -25,12 +25,12 @@ int mains(char *id, char *password) {
             PQerrorMessage(conn));
         do_exit(conn);
     }
-char *select="SELECT * FROM users ";
-char *where=concat(select,"where username='");
+char *select="SELECT * FROM users";
+char *where=concat(select," where username='");
 char *idval=concat(where,id);
 char *idvalclose=concat(idval,"' and password='");
 char *passval=concat(idvalclose,password);
-char *passvalclose=concat(passval,"'");
+char *passvalclose=concat(passval,"' and enabled='t'");
 printf(passvalclose);
     PGresult *res = PQexec(conn, passvalclose);    
     
@@ -39,6 +39,7 @@ printf(passvalclose);
         printf("\nNo data retrieved\n");        
         PQclear(res);
         do_exit(conn);
+return 0;
     }    
     
     int rows = PQntuples(res);
