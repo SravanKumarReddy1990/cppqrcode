@@ -29,8 +29,9 @@ client.connect(portone,host,function(){
 client.on('data',function(data){
   if(data=="success"){
    //console.log(`Server Says : ${data}`); 
-   response.send(` ${data}`);
+   //response.send(` ${data}`);
    client.destroy();
+response.sendFile(path.join(__dirname + '/index.html'))
 }
 })
 

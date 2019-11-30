@@ -79,7 +79,9 @@ while(1){
         array[i++] = p;
         p = strtok (NULL, "@@");
     }
-if(compareStrings(array[3],3,"one",3)!=0){
+if(compareStrings(array[3],3,"two",3)!=0){
+
+}else if(compareStrings(array[3],3,"one",3)!=0){
 int j=mains(array[0],array[1]);
 if(j==0){
 	send(new_socket , fail , strlen(fail) , 0 ); 
