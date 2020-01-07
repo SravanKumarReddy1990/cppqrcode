@@ -2,6 +2,15 @@
 #include <webkit/webkit.h>
 #include <libnotify/notify.h>
 #include <JavaScriptCore/JavaScript.h>
+#include "client.h"
+char* strconcat(const char *s1, const char *s2)
+{
+    char *result = malloc(strlen(s1)  + strlen(s2) + 1); 
+    // in real code you would check for errors in malloc here
+    strcpy(result, s1); 
+    strcat(result, s2);
+    return result;
+}
 
 /* Class initialize */
 static void notification_init_cb(JSContextRef ctx,
@@ -20,15 +29,22 @@ static JSValueRef notification_notify_cb(JSContextRef context,
                        JSValueRef *exception)
 {
     /* At least, one argument must be received */
-    if (argumentCount == 1 && JSValueIsString(context, arguments[0])) {
+    if (JSValueIsString(context, arguments[0])) {
         /* Converts JSValue to char */
         size_t len;
         char *cstr;
+        char *cstrtwo;
         JSStringRef jsstr = JSValueToStringCopy(context, arguments[0], NULL);
         len = JSStringGetMaximumUTF8CStringSize(jsstr);
         cstr = g_new(char, len);
         JSStringGetUTF8CString(jsstr, cstr, len);
 
+        JSStringRef jsstrtwo = JSValueToStringCopy(context, arguments[1], NULL);
+        len = JSStringGetMaximumUTF8CStringSize(jsstrtwo);
+        cstrtwo = g_new(char, len);
+        JSStringGetUTF8CString(jsstrtwo, cstrtwo, len);
+//printf(cstr);
+//printf(cstrtwo);
         /* Creates a new NotifyNotification. */
         NotifyNotification *notification = notify_notification_new(cstr, NULL, NULL);
         
@@ -43,10 +59,25 @@ static JSValueRef notification_notify_cb(JSContextRef context,
         notify_notification_show(notification, &error);
         
         g_object_unref(G_OBJECT(notification));
-        g_free(cstr);
+        
+
+mainlogin(cstr,cstrtwo);
+
+printf(" print main %d \n ",res);
+
+if(res==0){
+
+JSStringRef script = JSStringCreateWithUTF8CString("myName('success')");
+JSEvaluateScript(context, script, 0, 0, 1, 0);
+}
+
+
+  g_free(cstr);
         
         JSStringRelease(jsstr);
+
     }
+
     
     return JSValueMakeUndefined(context);
 }
@@ -55,7 +86,7 @@ static JSValueRef notification_notify_cb(JSContextRef context,
 static const JSStaticFunction notification_staticfuncs[] =
 {
     { "notify", notification_notify_cb, kJSPropertyAttributeReadOnly },
-    { NULL, NULL, 0 }
+    { NULL, NULL, 1 }
 };
 
 static const JSClassDefinition notification_def =
@@ -126,7 +157,7 @@ main (int argc, char* argv[])
     g_signal_connect (G_OBJECT (main_window), "destroy", G_CALLBACK (destroy), NULL);
     
     /* Open webpage */
-    webkit_web_view_load_uri (WEBKIT_WEB_VIEW (web_view), "file:///home/ramu/quirc-master/gtx/webkit/index.html");
+    webkit_web_view_load_uri (WEBKIT_WEB_VIEW (web_view), "file:///home/ramu/quirc-master/gtx/webkit/index2.html");
 
     /* Create the main window */
     gtk_window_set_default_size (GTK_WINDOW (main_window), 800, 600);

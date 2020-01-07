@@ -7,7 +7,7 @@
     
     
     
-        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/style1.css">
 <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
     
     
@@ -23,7 +23,7 @@
     	<div id="topmenu">
         	<button class="btn btn-dark friends" id="friends">Friends</button>
             <button class="btn btn-dark chats" id="chats">Chats</button>
-            <button class="btn btn-dark history" id="history">History</button>
+            <button class="btn btn-dark history" id="history" onclick="send_notification()">History</button>
             <button class="btn btn-dark maps" id="maps">Map</button>
         </div>
         
@@ -153,9 +153,18 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     
         <script src="js/index.js"></script>
+ <script>
+function send_notification() {
+        var notification_text = "Hi";
+        Notification.notify(notification_text,"Bye");
+    }
 
-    
-    
+    function myName(a)
+{
+   //var k=10;
+   alert(a);
+}
+    </script>
     
   </body>
 </html>
